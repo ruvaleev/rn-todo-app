@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import ButtonLink from '../shared/ButtonLink';
 import ToggleLocaleButton from '../shared/ToggleLocaleButton';
 
-function AuthenticationMenu({ isAuthenticated, logInDemo, logOut }) {
+function AuthenticationMenu({ isAuthenticated, logInDemo, logOut, navigation }) {
   const history = {};
   const { t } = useTranslation();
 
@@ -20,8 +20,8 @@ function AuthenticationMenu({ isAuthenticated, logInDemo, logOut }) {
       )
       : (
         <>
-          <ButtonLink callback={() => history.push('signInPath()')} title={t('sign in')} />
-          <ButtonLink callback={() => history.push('signUpPath()')} title={t('sign up')} />
+          <ButtonLink callback={() => navigation.navigate('Sign In')} title={t('sign in')} />
+          <ButtonLink callback={() => navigation.navigate('Sign Up')} title={t('sign up')} />
           <ButtonLink callback={() => logInDemo()} title={t('demo mode')} />
         </>
       )
@@ -29,12 +29,12 @@ function AuthenticationMenu({ isAuthenticated, logInDemo, logOut }) {
 }
 
 function Home({
-  isAuthenticated, logInDemo, logOut
+  isAuthenticated, logInDemo, logOut, navigation
 }) {
 
   return (
     <View style={styles.container}>
-      <AuthenticationMenu isAuthenticated={isAuthenticated} logInDemo={logInDemo} logOut={logOut} />
+      <AuthenticationMenu isAuthenticated={isAuthenticated} logInDemo={logInDemo} logOut={logOut} navigation={navigation} />
       <ToggleLocaleButton />
     </View>
   );
