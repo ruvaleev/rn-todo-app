@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
 import ButtonLink from '../shared/ButtonLink';
+import DemoModeMessage from '../shared/DemoModeMessage';
 import ToggleLocaleButton from '../shared/ToggleLocaleButton';
 
 function AuthenticationMenu({ isAuthenticated, logInDemo, logOut, navigation }) {
@@ -36,6 +37,7 @@ function Home({
     <View style={styles.container}>
       <AuthenticationMenu isAuthenticated={isAuthenticated} logInDemo={logInDemo} logOut={logOut} navigation={navigation} />
       <ToggleLocaleButton />
+      <DemoModeMessage />
     </View>
   );
 }

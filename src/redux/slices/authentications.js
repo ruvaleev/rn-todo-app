@@ -9,7 +9,7 @@ const cookies = new Cookies();
 /* eslint-disable no-unused-expressions, no-param-reassign */
 
 const initialState = {
-  isAuthenticated: false, isDemo: false, isLoading: false, isError: false, error: null,
+  isAuthenticated: false, isDemo: true, isLoading: false, isError: false, error: null,
 };
 
 export const verifyAuth = createAsyncThunk(
