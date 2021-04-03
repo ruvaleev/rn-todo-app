@@ -5,9 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import createStore from './redux/store';
-import Home from './components/Home';
-import SignUp from './components/SignUp';
+import Planner from './components/Planner';
 import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import Home from './components/Home';
 
 const store = createStore();
 const Stack = createStackNavigator();
@@ -17,9 +18,10 @@ function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Sign Up" component={SignUp} />
+          <Stack.Screen name="Planner" component={Planner} />
           <Stack.Screen name="Sign In" component={SignIn} />
+          <Stack.Screen name="Sign Up" component={SignUp} />
+          <Stack.Screen name="Home" component={Home} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

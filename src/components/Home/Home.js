@@ -8,7 +8,6 @@ import DemoModeMessage from '../shared/DemoModeMessage';
 import ToggleLocaleButton from '../shared/ToggleLocaleButton';
 
 function AuthenticationMenu({ isAuthenticated, logInDemo, logOut, navigation }) {
-  const history = {};
   const { t } = useTranslation();
 
   return (
@@ -16,7 +15,7 @@ function AuthenticationMenu({ isAuthenticated, logInDemo, logOut, navigation }) 
       ? (
         <>
           <ButtonLink callback={() => logOut()} title={t('log out')} />
-          <ButtonLink callback={() => history.push('plannerPath()')} title={t('planner')} />
+          <ButtonLink callback={() => navigation.navigate('Planner')} title={t('planner')} />
         </>
       )
       : (
@@ -59,12 +58,14 @@ AuthenticationMenu.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   logInDemo: PropTypes.func.isRequired,
   logOut: PropTypes.func.isRequired,
+  navigation: PropTypes.func.isRequired
 };
 
 Home.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   logInDemo: PropTypes.func.isRequired,
   logOut: PropTypes.func.isRequired,
+  navigation: PropTypes.func.isRequired
 };
 
 Home.defaultProps = {

@@ -2,6 +2,7 @@ module.exports = {
     "env": {
         "browser": true,
         "es2021": true,
+        "jest": true,
         "node": true
     },
     "extends": [
@@ -17,7 +18,8 @@ module.exports = {
     },
     "plugins": [
         "react",
-        "react-native"
+        "react-native",
+        "jest"
     ],
     "settings": {
       "react": {
