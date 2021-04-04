@@ -18,7 +18,8 @@
         "response is undefined": "Сервер недоступен, попробуйте позже..."
       },
       "error": {
-        "response is undefined": "Сервер недоступен, попробуйте позже..."
+        "response is undefined": "Сервер недоступен, попробуйте позже...",
+        "already signed in": "Вы уже авторизованы"
       }
     }
   }

@@ -5,6 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import ButtonLink from '../shared/ButtonLink';
 import DemoModeMessage from '../shared/DemoModeMessage';
+import Errors from '../shared/Errors';
 import ToggleLocaleButton from '../shared/ToggleLocaleButton';
 
 function AuthenticationMenu({ isAuthenticated, logInDemo, logOut, navigation }) {
@@ -29,7 +30,7 @@ function AuthenticationMenu({ isAuthenticated, logInDemo, logOut, navigation }) 
 }
 
 function Home({
-  isAuthenticated, logInDemo, logOut, navigation
+  error, isAuthenticated, isError, logInDemo, logOut, navigation, resetError
 }) {
 
   return (
@@ -37,6 +38,7 @@ function Home({
       <AuthenticationMenu isAuthenticated={isAuthenticated} logInDemo={logInDemo} logOut={logOut} navigation={navigation} />
       <ToggleLocaleButton />
       <DemoModeMessage />
+      <Errors isError={isError} error={error} callback={() => resetError()} />
     </View>
   );
 }
@@ -58,14 +60,17 @@ AuthenticationMenu.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   logInDemo: PropTypes.func.isRequired,
   logOut: PropTypes.func.isRequired,
-  navigation: PropTypes.func.isRequired
+  navigation: PropTypes.object.isRequired
 };
 
 Home.propTypes = {
+  error: PropTypes.string,
+  isError: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   logInDemo: PropTypes.func.isRequired,
   logOut: PropTypes.func.isRequired,
-  navigation: PropTypes.func.isRequired
+  navigation: PropTypes.object.isRequired,
+  resetError: PropTypes.func.isRequired
 };
 
 Home.defaultProps = {

@@ -17,7 +17,16 @@ function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Home" screenOptions= {{
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#fff',
+            height: '2rem'
+          },
+          headerTitleStyle :{
+            fontWeight: 'bold',
+          },
+        }}>
           <Stack.Screen name="Planner" component={Planner} />
           <Stack.Screen name="Sign In" component={SignIn} />
           <Stack.Screen name="Sign Up" component={SignUp} />

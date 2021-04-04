@@ -1,29 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 function AuthenticationForm({ onSubmit }) {
   const { t } = useTranslation();
 
+  let state = { email: '', password: '' }
+
   return (
-    <form
-      className="flex flex-col items-center mt-2"
-      onSubmit={(e) => {
-        e.preventDefault();
+    <View style={styles.form}>
+      <TextInput
+        style={styles.input}
+        placeholder={t('email')}
+        keyboardType='email-address'
+        onChangeText={(text) => state.email = text}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder={t('password')}
+        secureTextEntry={true}
+        onChangeText={(text) => state.password = text}
+      />
+      <TouchableOpacity style={styles.button} onPress={() => {
         onSubmit({
-          email: e.target.elements.email.value,
-          password: e.target.elements.password.value,
+          email: state.email,
+          password: state.password,
         });
-        e.target.elements.email.value = '';
-        e.target.elements.password.value = '';
-      }}
-    >
-      <input type="text" name="email" placeholder={t('email')} className="h-6 pl-8 mt-3 w-full italic bordered" />
-      <input type="password" name="password" placeholder={t('password')} className="h-6 pl-8 mt-3 w-full italic bordered" />
-      <button type="submit" className="h-6 w-6 mt-3 w-full bordered">
-        {t('submit')}
-      </button>
-    </form>
+      }} >
+        <Text>{t('submit')}</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -32,3 +39,32 @@ export default AuthenticationForm;
 AuthenticationForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
+
+const styles = StyleSheet.create({
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '2rem',
+    marginBottom: '10vh'
+  },
+  input: {
+    height: '1.5rem',
+    paddingLeft: '2rem',
+    marginTop: '0.75rem',
+    width: '100%',
+    fontStyle: 'italic',
+    borderColor: 'black',
+    borderWidth: 1
+  },
+  button: {
+    justifyContent: 'center',
+    height: '1.5rem',
+    marginTop: '0.75rem',
+    width: '100%',
+    borderColor: 'black',
+    borderWidth: 1,
+    textAlign: 'center'
+  }
+});

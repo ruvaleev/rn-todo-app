@@ -9,6 +9,14 @@ module.exports = {
         "eslint:recommended",
         "plugin:react/recommended"
     ],
+    "overrides": [
+        {
+            "files": ["*.test.js"],
+            "rules": {
+                "no-import-assign": "off"
+            }
+        }
+    ],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true

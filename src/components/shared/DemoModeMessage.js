@@ -10,9 +10,6 @@ function DemoModeMessage({ isDemo }) {
   return isDemo
     && (
     <Text style={styles.message}>{t('demo mode message')}</Text>
-    // <div className="fixed bottom-0 text-red-100 font-black text-2xl w-full flex justify-center text-center">
-    //   {t('demo mode message')}
-    // </div>
     );
 }
 
@@ -22,11 +19,9 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps)(DemoModeMessage);
 
-// DemoModeMessage.propTypes = {
-//   isDemo: PropTypes.bool.isRequired,
-// };
-
-// fixed bottom-0 text-red-100 font-black text-2xl w-full flex justify-center text-center
+DemoModeMessage.propTypes = {
+  isDemo: PropTypes.bool.isRequired,
+};
 
 const styles = StyleSheet.create({
   message: {

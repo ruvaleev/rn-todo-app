@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import i18n from 'i18next';
-// import { useHistory } from 'react-router-dom';
 
-// import { rootPath } from 'helpers/routes';
 import { chooseNewLocale } from './functions';
 import home from '../../assets/icons/home.svg';
 import en from '../../assets/icons/en-lang.svg';
 import ru from '../../assets/icons/ru-lang.svg';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 function LanguagePanel() {
   const [locale, setLocale] = useState(chooseNewLocale());
@@ -15,52 +14,45 @@ function LanguagePanel() {
   const localeIcon = i18n.language === 'en' ? en : ru;
 
   return (
-    <button
-      type="button"
-      onClick={() => {
-        i18n.changeLanguage(locale);
-        setLocale(chooseNewLocale());
-      }}
-      className="cursor-pointer mx-2"
-    >
-      <img src={localeIcon} alt="change language" className="w-8" />
-    </button>
+    <TouchableOpacity style={styles.button} onPress={() => {i18n.changeLanguage(locale); setLocale(chooseNewLocale())}} >
+      <Image source={localeIcon} style={styles.icon}/>
+    </TouchableOpacity>
   );
 }
 
-function HomeLink() {
-  const history = useHistory();
+function HomeLink({ navigation }) {
   return (
-    <button type="button" onClick={() => history.push(rootPath())} className="cursor-pointer mx-2">
-      <img src={home} alt="home" className="w-8" />
-    </button>
+    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')} >
+      <Image source={home} style={styles.icon}/>
+    </TouchableOpacity>
+    
   );
 }
 
-function ControlPanel({ className }) {
+function ControlPanel({ navigation }) {
   return (
-    <div className={`control-panel mt-4 flex ${className}`}>
+    <View style={styles.controlPanel}>
       <LanguagePanel />
-      <HomeLink />
-    </div>
+      <HomeLink navigation={navigation} />
+    </View>
   );
 }
 
-const LayoutWithControlPanel = ({ children, className }) => (
+const LayoutWithControlPanel = ({ children, navigation }) => (
   <>
     {children}
-    <ControlPanel className={className} />
+    <ControlPanel navigation={navigation} />
   </>
 );
 
 export default LayoutWithControlPanel;
 
 ControlPanel.propTypes = {
-  className: PropTypes.string,
+  navigation: PropTypes.object.isRequired,
 };
 
-ControlPanel.defaultProps = {
-  className: null,
+HomeLink.propTypes = {
+  navigation: PropTypes.object.isRequired,
 };
 
 LayoutWithControlPanel.propTypes = {
@@ -70,10 +62,31 @@ LayoutWithControlPanel.propTypes = {
       PropTypes.arrayOf(PropTypes.object),
     ],
   ),
-  className: PropTypes.string,
+  navigation: PropTypes.object.isRequired,
 };
 
 LayoutWithControlPanel.defaultProps = {
   children: null,
-  className: null,
 };
+
+
+const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: '0.5rem'
+  },
+  controlPanel: {
+    display: 'flex',
+    flexDirection: 'row',
+    bottom: '10vh',
+    justifyContent: 'flex-end',
+    zIndex: 11,
+    marginTop: '2rem',
+
+  },
+  icon: {
+    width: '2rem',
+    height: '2rem',
+  }
+});

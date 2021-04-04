@@ -2,16 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { castErrorMessage } from './functions';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 function Errors({ isError, error, callback }) {
   return (
     isError
       && (
-      <div className="absolute flex justify-center items-center w-full h-full">
-        <button type="button" className="fixed p-4 z-20 bordered modal" onClick={callback}>
-          {castErrorMessage(error)}
-        </button>
-      </div>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.button} onPress={callback} >
+          <Text>{castErrorMessage(error)}</Text>
+        </TouchableOpacity>
+      </View>
       )
   );
 }
@@ -27,3 +28,22 @@ Errors.propTypes = {
 Errors.defaultProps = {
   error: null,
 };
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%'
+  },
+  button: {
+    padding: '1rem',
+    zIndex: 20,
+    borderColor: 'black',
+    borderWidth: 1,
+    backgroundColor: '#ffffffc7',
+  }
+});

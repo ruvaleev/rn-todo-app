@@ -9,7 +9,6 @@ import Store from '../../shared/Store';
 import * as authenticationsSliceActions from '../../../redux/slices/authentications';
 import AuthenticationsReducerGenerator from '../../shared/AuthenticationsReducerGenerator';
 
-/* eslint-disable no-import-assign */
 function renderWithStoreAndNavigator(store, navigation) {
   return render(
     <Provider store={store}>
@@ -144,6 +143,37 @@ describe('Home', () => {
 
       fireEvent.press(changeLanguageLink);
       expect(i18n.language).toEqual(initialLanguage);
+    });
+  });
+
+  describe('when there are errors in store', () => {
+    const errorMessage = 'Some Error Message';
+
+    beforeEach(() => {
+      store = mockStore(Store({
+        authenticationsReducer: AuthenticationsReducerGenerator({
+          isError: true,
+          error: errorMessage,
+        }),
+      }));
+
+      store.dispatch = jest.fn();
+      component = renderWithStoreAndNavigator(store, navigation);
+    });
+
+    it('shows proper error message', () => {
+      expect(component.queryByText(errorMessage)).toBeTruthy();
+    });
+
+    it('dispatches resetError action on click on error message', () => {
+      authenticationsSliceActions.resetError = jest.fn().mockImplementation();
+
+      const errorMessageDiv = component.getByText(errorMessage);
+
+      fireEvent.press(errorMessageDiv);
+
+      expect(authenticationsSliceActions.resetError).toHaveBeenCalledTimes(1);
+      expect(store.dispatch).toHaveBeenCalledTimes(1);
     });
   });
 });

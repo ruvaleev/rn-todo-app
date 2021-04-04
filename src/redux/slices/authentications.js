@@ -92,6 +92,10 @@ const authenticationsSlice = createSlice({
       state.isError = false;
       state.error = null;
     },
+    setError(state, action) {
+      state.isError = true;
+      state.error = action.payload;
+    }
   },
   extraReducers: {
     [verifyAuth.pending]: (state) => {
@@ -159,5 +163,5 @@ const authenticationsSlice = createSlice({
   },
 });
 
-export const { enableDemoMode, resetError } = authenticationsSlice.actions;
+export const { enableDemoMode, setError, resetError } = authenticationsSlice.actions;
 export default authenticationsSlice.reducer;

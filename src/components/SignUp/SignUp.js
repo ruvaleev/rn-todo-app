@@ -1,48 +1,38 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-// import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import withLoading from '../HOC/withLoading';
 import AuthenticationForm from '../shared/AuthenticationForm';
 import Errors from '../shared/Errors';
 import LayoutWithControlPanel from '../shared/LayoutWithControlPanel';
 
-function RegistrationForm({ onSubmit }) {
+function RegistrationForm({ onSubmit, navigation }) {
   const { t } = useTranslation();
 
   return (
-    <LayoutWithControlPanel>
-      <h1>{t('sign up')}</h1>
+    <LayoutWithControlPanel navigation={navigation}>
+      <Text>{t('sign up')}</Text>
       <AuthenticationForm onSubmit={onSubmit} />
     </LayoutWithControlPanel>
   );
 }
 
-// function SignUp({
-//   isAuthenticated, isError, error, resetError, signUp,
-// }) {
-//   const history = useHistory();
+function SignUp({ isAuthenticated, isError, error, navigation, resetError, setError, signUp }) {
+  const { t } = useTranslation();
 
-//   useEffect(() => {
-//     if (isAuthenticated) {
-//       history.push('/planner');
-//     }
-//   }, [isAuthenticated]);
-//   return (
-//     <div className="flex flex-col justify-center items-center h-screen">
-//       <RegistrationForm onSubmit={signUp} />
-//       <Errors isError={isError} error={error} callback={() => resetError()} />
-//     </div>
-//   );
-// }
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigation.navigate('Home');
+      setError(t('error:already signed in'));
+    }
+  }, [isAuthenticated]);
 
-function SignUp({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Sign Up page</Text>
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+    <View style={styles.form}>
+       <RegistrationForm onSubmit={signUp} navigation={navigation}/>
+       <Errors isError={isError} error={error} callback={() => resetError()} />
     </View>
   )
 }
@@ -50,17 +40,27 @@ function SignUp({ navigation }) {
 export default withLoading(SignUp);
 
 RegistrationForm.propTypes = {
+  navigation: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 
-// SignUp.propTypes = {
-//   error: PropTypes.string,
-//   isError: PropTypes.bool.isRequired,
-//   isAuthenticated: PropTypes.bool.isRequired,
-//   resetError: PropTypes.func.isRequired,
-//   signUp: PropTypes.func.isRequired,
-// };
+SignUp.propTypes = {
+  error: PropTypes.string,
+  isError: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  navigation: PropTypes.object.isRequired,
+  resetError: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
+  signUp: PropTypes.func.isRequired,
+};
 
-// SignUp.defaultProps = {
-//   error: null,
-// };
+const styles = StyleSheet.create({
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 'calc(100vh - 2rem)',
+    backgroundColor: '#fff',
+  },
+});
