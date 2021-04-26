@@ -1,11 +1,9 @@
-// import 'regenerator-runtime/runtime';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import qs from 'qs';
 
-import Cookies from 'universal-cookie';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axiosBackendInstance from '../shared/axiosBackendInstance';
 
-const cookies = new Cookies();
 /* eslint-disable no-unused-expressions, no-param-reassign */
 
 const initialState = {
@@ -62,7 +60,7 @@ export const logInDemo = createAsyncThunk(
   async () => {
     await axiosBackendInstance.post('/auth/demo')
       .then((res) => {
-        cookies.set('DemoMode?', true);
+        AsyncStorage.setItem('DemoMode?', true)
         res;
       })
       .catch((error) => Promise.reject(new Error(error.response.data.errors)));
@@ -74,7 +72,7 @@ export const logOut = createAsyncThunk(
   async () => {
     await axiosBackendInstance.delete('/auth')
       .then((res) => {
-        cookies.remove('DemoMode?');
+        AsyncStorage.removeItem('DemoMode?')
         res;
       })
       .catch((error) => Promise.reject(new Error(error.response.data.error)));

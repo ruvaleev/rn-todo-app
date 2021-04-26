@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native'
 import { Provider } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import configureStore from 'redux-mock-store';
 import i18n from 'i18next';
 
@@ -8,6 +9,8 @@ import Home from '../../../components/Home';
 import Store from '../../shared/Store';
 import * as authenticationsSliceActions from '../../../redux/slices/authentications';
 import AuthenticationsReducerGenerator from '../../shared/AuthenticationsReducerGenerator';
+
+const flushPromises = () => new Promise(setImmediate);
 
 function renderWithStoreAndNavigator(store, navigation) {
   return render(
@@ -33,6 +36,7 @@ describe('Home', () => {
       }));
 
       store.dispatch = jest.fn();
+      authenticationsSliceActions.verifyAuth = jest.fn();
       component = renderWithStoreAndNavigator(store, navigation);
     });
 
@@ -54,6 +58,10 @@ describe('Home', () => {
       expect(store.dispatch).toHaveBeenCalledTimes(1);
     });
 
+    it("doesn't verify auth", () => {
+      expect(authenticationsSliceActions.verifyAuth).toHaveBeenCalledTimes(0);
+    });
+
     it("doesn't render sign in link", () => {
       expect(component.queryByText(i18n.t('sign in'))).toBeFalsy();
     });
@@ -73,6 +81,40 @@ describe('Home', () => {
       fireEvent.press(changeLanguageLink);
       expect(i18n.language).toEqual(initialLanguage);
     });
+
+    describe('DemoMode check', () => {
+      beforeEach(() => {
+        authenticationsSliceActions.enableDemoMode = jest.fn().mockImplementation();
+      });
+
+      it('dispatches enableDemoMode action when user has DemoMode? cookie set to true', async () => {
+        await AsyncStorage.setItem('DemoMode?', 'true')
+        renderWithStoreAndNavigator(store, navigation);
+        await flushPromises();
+
+        expect(authenticationsSliceActions.enableDemoMode).toHaveBeenCalledTimes(1);
+        expect(store.dispatch).toHaveBeenCalledTimes(1);
+        await AsyncStorage.removeItem('DemoMode?')
+      });
+
+      it('dispatches enableDemoMode action when user has DemoMode? cookie set to false', async () => {
+        await AsyncStorage.setItem('DemoMode?', 'false')
+        renderWithStoreAndNavigator(store, navigation);
+        await flushPromises();
+
+        expect(authenticationsSliceActions.enableDemoMode).toHaveBeenCalledTimes(0);
+        expect(store.dispatch).toHaveBeenCalledTimes(0);
+      });
+
+      it('dispatches enableDemoMode action when user has DemoMode? cookie is absent', async () => {
+        await AsyncStorage.removeItem('DemoMode?')
+        renderWithStoreAndNavigator(store, navigation);
+        await flushPromises();
+
+        expect(authenticationsSliceActions.enableDemoMode).toHaveBeenCalledTimes(0);
+        expect(store.dispatch).toHaveBeenCalledTimes(0);
+      });
+    });
   });
 
   describe('when user in Demo mode', () => {
@@ -84,7 +126,12 @@ describe('Home', () => {
         }),
       }));
       store.dispatch = jest.fn();
+      authenticationsSliceActions.verifyAuth = jest.fn();
       component = renderWithStoreAndNavigator(store, navigation);
+    });
+
+    it("doesn't verify auth", () => {
+      expect(authenticationsSliceActions.verifyAuth).toHaveBeenCalledTimes(0);
     });
 
     it('renders message about demo mode', () => {
@@ -108,7 +155,12 @@ describe('Home', () => {
     beforeEach(() => {
       store = mockStore(Store());
       store.dispatch = jest.fn();
+      authenticationsSliceActions.verifyAuth = jest.fn();
       component = renderWithStoreAndNavigator(store, navigation);
+    });
+
+    it('verifies auth', () => {
+      expect(authenticationsSliceActions.verifyAuth).toHaveBeenCalledTimes(1);
     });
 
     it("doesn't render message about demo mode", () => {
@@ -146,6 +198,40 @@ describe('Home', () => {
     });
   });
 
+  describe('when component is loading', () => {
+    beforeEach(() => {
+      store = mockStore(Store({
+        authenticationsReducer: AuthenticationsReducerGenerator({
+          isLoading: true
+        }),
+      }));
+
+      store.dispatch = jest.fn();
+      component = renderWithStoreAndNavigator(store, navigation);
+    });
+
+    it('renders loading icon', () => {
+      expect(component.getByTestId('LoadingIcon')).toBeTruthy();
+    });
+  });
+
+  describe('when component is not loading', () => {
+    beforeEach(() => {
+      store = mockStore(Store({
+        authenticationsReducer: AuthenticationsReducerGenerator({
+          isLoading: false
+        }),
+      }));
+
+      store.dispatch = jest.fn();
+      component = renderWithStoreAndNavigator(store, navigation);
+    });
+
+    it("doesn't render loading icon", () => {
+      expect(component.queryByTestId('LoadingIcon')).toBeFalsy();
+    });
+  });
+
   describe('when there are errors in store', () => {
     const errorMessage = 'Some Error Message';
 
@@ -173,7 +259,7 @@ describe('Home', () => {
       fireEvent.press(errorMessageDiv);
 
       expect(authenticationsSliceActions.resetError).toHaveBeenCalledTimes(1);
-      expect(store.dispatch).toHaveBeenCalledTimes(1);
+      expect(store.dispatch).toHaveBeenCalledTimes(2);
     });
   });
 });

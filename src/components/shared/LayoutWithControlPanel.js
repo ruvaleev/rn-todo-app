@@ -14,7 +14,11 @@ function LanguagePanel() {
   const localeIcon = i18n.language === 'en' ? en : ru;
 
   return (
-    <TouchableOpacity style={styles.button} onPress={() => {i18n.changeLanguage(locale); setLocale(chooseNewLocale())}} >
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => {i18n.changeLanguage(locale); setLocale(chooseNewLocale())}}
+      testID='ChangeLanguage'
+    >
       <Image source={localeIcon} style={styles.icon}/>
     </TouchableOpacity>
   );
@@ -22,26 +26,26 @@ function LanguagePanel() {
 
 function HomeLink({ navigation }) {
   return (
-    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')} >
+    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')} testID='HomeLink' >
       <Image source={home} style={styles.icon}/>
     </TouchableOpacity>
     
   );
 }
 
-function ControlPanel({ navigation }) {
+function ControlPanel({ navigation, providedStyle }) {
   return (
-    <View style={styles.controlPanel}>
+    <View style={[styles.controlPanel, providedStyle]}>
       <LanguagePanel />
       <HomeLink navigation={navigation} />
     </View>
   );
 }
 
-const LayoutWithControlPanel = ({ children, navigation }) => (
+const LayoutWithControlPanel = ({ children, navigation, providedStyle }) => (
   <>
     {children}
-    <ControlPanel navigation={navigation} />
+    <ControlPanel navigation={navigation} providedStyle={providedStyle}/>
   </>
 );
 
@@ -49,6 +53,7 @@ export default LayoutWithControlPanel;
 
 ControlPanel.propTypes = {
   navigation: PropTypes.object.isRequired,
+  providedStyle: PropTypes.object.isRequired
 };
 
 HomeLink.propTypes = {
@@ -63,10 +68,12 @@ LayoutWithControlPanel.propTypes = {
     ],
   ),
   navigation: PropTypes.object.isRequired,
+  providedStyle: PropTypes.object.isRequired
 };
 
 LayoutWithControlPanel.defaultProps = {
   children: null,
+  providedStyle: {}
 };
 
 

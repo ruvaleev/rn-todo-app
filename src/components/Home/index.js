@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import {
-  logInDemo, logOut, resetError, verifyAuth,
+  enableDemoMode, logInDemo, logOut, resetError, verifyAuth,
 } from '../../redux/slices/authentications';
 import Home from './Home';
 
@@ -14,6 +14,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  enableDemoMode: () => dispatch(enableDemoMode()),
   logInDemo: () => dispatch(logInDemo()),
   logOut: () => dispatch(logOut()),
   resetError: () => dispatch(resetError()),

@@ -17,14 +17,6 @@ function switchChoosen(state, newChoosenId) {
   newChoosenArea.choosen = true;
 }
 
-function shiftBorderAreas(state, choosenAreaIndex) {
-  if (choosenAreaIndex === 0) {
-    state.areas.unshift(state.areas.splice(-1)[0]);
-  } else if (choosenAreaIndex === (state.areas.length - 1)) {
-    state.areas.splice(state.areas.length, 0, state.areas.shift());
-  }
-}
-
 export const fetchAreas = createAsyncThunk(
   'areas/fetchAll',
   async () => {
@@ -108,8 +100,6 @@ const areasSlice = createSlice({
   initialState,
   reducers: {
     chooseArea(state, action) {
-      const areaIndex = state.areas.findIndex((stateArea) => stateArea.id === action.payload);
-      shiftBorderAreas(state, areaIndex);
       switchChoosen(state, action.payload);
     },
     resetError(state) {
@@ -117,8 +107,8 @@ const areasSlice = createSlice({
       state.error = null;
     },
     toggleReady(state, action) {
-      area = state.areas.find((stateArea) => stateArea.id === action.payload.areaId);
-      const todo = area.todos.find((stateTodo) => stateTodo.id === action.payload.todoId);
+      area = state.areas.find((stateArea) => stateArea.choosen);
+      const todo = area.todos.find((stateTodo) => stateTodo.id === action.payload);
       todo.completed = !todo.completed;
 
       axiosBackendInstance.patch(`/todos/${todo.id}`, qs.stringify({
@@ -174,7 +164,6 @@ const areasSlice = createSlice({
         const newChoosenAreaIndex = index === state.areas.length ? (index - 1) : index;
         const newChoosenArea = state.areas[newChoosenAreaIndex];
 
-        shiftBorderAreas(state, newChoosenAreaIndex);
         newChoosenArea && switchChoosen(state, newChoosenArea.id);
       }
     },

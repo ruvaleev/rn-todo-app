@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import withMocks from './withMocks';
+
 const ROOT_URL = process.env.ROOT_URL || 'http://localhost:4567';
 const API_KEY = process.env.API_KEY || 'dev_api_key';
 
@@ -11,4 +13,4 @@ const axiosBackendInstance = axios.create({
 
 });
 
-export default axiosBackendInstance;
+export default withMocks(axiosBackendInstance);

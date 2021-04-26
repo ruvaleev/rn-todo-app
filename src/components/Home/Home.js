@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, View } from 'react-native';
-
 import { useTranslation } from 'react-i18next';
+
+import withLoading from '../HOC/withLoading';
 import ButtonLink from '../shared/ButtonLink';
 import DemoModeMessage from '../shared/DemoModeMessage';
 import Errors from '../shared/Errors';
@@ -29,9 +31,22 @@ function AuthenticationMenu({ isAuthenticated, logInDemo, logOut, navigation }) 
   );
 }
 
+const isInDemoMode = async () => {
+  const isDemoMode = await AsyncStorage.getItem('DemoMode?')
+
+  return isDemoMode === 'true'
+}
+
+const enableDemoModeIfCookiePersists = async (enableDemoMode) => (await isInDemoMode()) && enableDemoMode()
+
+
 function Home({
-  error, isAuthenticated, isError, logInDemo, logOut, navigation, resetError
+  enableDemoMode, error, isAuthenticated, isError, logInDemo, logOut, navigation, resetError, verifyAuth
 }) {
+
+  useEffect(() => {
+    isAuthenticated ? enableDemoModeIfCookiePersists(enableDemoMode) : verifyAuth()
+  }, [!isAuthenticated]);
 
   return (
     <View style={styles.container}>
@@ -43,7 +58,7 @@ function Home({
   );
 }
 
-export default Home;
+export default withLoading(Home);
 
 const styles = StyleSheet.create({
   container: {
@@ -54,8 +69,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// export default withLoading(Home);
-
 AuthenticationMenu.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   logInDemo: PropTypes.func.isRequired,
@@ -64,13 +77,15 @@ AuthenticationMenu.propTypes = {
 };
 
 Home.propTypes = {
+  enableDemoMode: PropTypes.func.isRequired,
   error: PropTypes.string,
   isError: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   logInDemo: PropTypes.func.isRequired,
   logOut: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
-  resetError: PropTypes.func.isRequired
+  resetError: PropTypes.func.isRequired,
+  verifyAuth: PropTypes.func.isRequired
 };
 
 Home.defaultProps = {

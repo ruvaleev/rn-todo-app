@@ -43,6 +43,12 @@ export const defaultAreas = [{
   title: 'Карьера',
   todos: [],
   created_at: new Date(),
+},
+{
+  id: 'area_3',
+  title: 'Образование',
+  todos: [],
+  created_at: new Date(),
 }];
 
 function getRandomInt(max) {
