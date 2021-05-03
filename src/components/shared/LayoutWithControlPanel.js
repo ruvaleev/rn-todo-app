@@ -35,7 +35,7 @@ function HomeLink({ navigation }) {
 
 function ControlPanel({ navigation, providedStyle }) {
   return (
-    <View style={[styles.controlPanel, providedStyle]}>
+    <View style={providedStyle}>
       <LanguagePanel />
       <HomeLink navigation={navigation} />
     </View>
@@ -50,32 +50,6 @@ const LayoutWithControlPanel = ({ children, navigation, providedStyle }) => (
 );
 
 export default LayoutWithControlPanel;
-
-ControlPanel.propTypes = {
-  navigation: PropTypes.object.isRequired,
-  providedStyle: PropTypes.object.isRequired
-};
-
-HomeLink.propTypes = {
-  navigation: PropTypes.object.isRequired,
-};
-
-LayoutWithControlPanel.propTypes = {
-  children: PropTypes.oneOfType(
-    [
-      PropTypes.object,
-      PropTypes.arrayOf(PropTypes.object),
-    ],
-  ),
-  navigation: PropTypes.object.isRequired,
-  providedStyle: PropTypes.object.isRequired
-};
-
-LayoutWithControlPanel.defaultProps = {
-  children: null,
-  providedStyle: {}
-};
-
 
 const styles = StyleSheet.create({
   button: {
@@ -97,3 +71,28 @@ const styles = StyleSheet.create({
     height: '2rem',
   }
 });
+
+ControlPanel.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  providedStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+};
+
+HomeLink.propTypes = {
+  navigation: PropTypes.object.isRequired,
+};
+
+LayoutWithControlPanel.propTypes = {
+  children: PropTypes.oneOfType(
+    [
+      PropTypes.object,
+      PropTypes.arrayOf(PropTypes.object),
+    ],
+  ),
+  navigation: PropTypes.object.isRequired,
+  providedStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+};
+
+LayoutWithControlPanel.defaultProps = {
+  children: null,
+  providedStyle: styles.controlPanel
+};

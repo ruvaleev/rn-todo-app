@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import Area from '../Area';
-import Menu from '../Menu';
+import AreasCard from '../AreasCard';
 import DemoModeMessage from '../shared/DemoModeMessage';
 import LayoutWithControlPanel from '../shared/LayoutWithControlPanel';
 
@@ -21,13 +20,14 @@ function Planner({ fetchAreas, navigation, isAuthenticated, setError }) {
   }, [!isAuthenticated]);
 
   return (
-    <LayoutWithControlPanel navigation={navigation} providedStyle={styles.controlPanel}>
-      <View style={styles.container}>
-        <Area/>
-        <Menu/>
-        <DemoModeMessage />
-      </View>
-    </LayoutWithControlPanel>
+    <>
+      <LayoutWithControlPanel navigation={navigation} providedStyle={styles.controlPanel}>
+        <View style={styles.container}>
+          <AreasCard/>
+        </View>
+      </LayoutWithControlPanel>
+      <DemoModeMessage />
+    </>
   );
 }
 
@@ -41,10 +41,13 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   controlPanel: {
-    position: 'absolute',
-    bottom: '1rem',
+    backgroundColor: '#fff',
+    marginTop: '0rem',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     right: 0,
-    paddingRight: '0.5rem'
+    padding: '0.5rem',
   }
 });
 

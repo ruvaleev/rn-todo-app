@@ -3,27 +3,21 @@ import { fireEvent, render } from '@testing-library/react-native'
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import Menu from '../../../components/Menu';
+import AreasMenu from '../../../components/AreasMenu';
 import Store from '../../shared/Store';
 import * as areasSliceActions from '../../../redux/slices/areas';
 import AreasReducerGenerator from '../../shared/AreasReducerGenerator';
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({t: key => key})
-}));
-
-function renderWithStoreAndNavigator(store, navigation) {
+function renderWithStore(store) {
   return render(
     <Provider store={store}>
-      <Menu navigation={navigation}/>
+      <AreasMenu/>
     </Provider>,
   );
 }
 
-describe('Menu', () => {
+describe('AreasMenu', () => {
   const mockStore = configureStore([]);
-  const navigate = jest.fn();
-  const navigation = { navigate: navigate };
   let store;
   let component;
   let areas;
@@ -34,7 +28,7 @@ describe('Menu', () => {
   beforeEach(() => {
     store = mockStore(Store({ areasReducer: AreasReducerGenerator({ areasCount: 3 }) }));
     store.dispatch = jest.fn();
-    component = renderWithStoreAndNavigator(store, navigation);
+    component = renderWithStore(store);
     areas = store.getState().areasReducer.areas;
     choosenArea = areas.find((area) => area.choosen);
     nonChoosenArea = areas.find((area) => !area.choosen);
@@ -68,20 +62,5 @@ describe('Menu', () => {
     expect(areasSliceActions.chooseArea).toHaveBeenCalledWith(nonChoosenArea.id);
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(nonChoosenArea.id);
-  });
-
-  it('dispatches createArea action on area form submit', () => {
-    areasSliceActions.createArea = jest.fn().mockImplementation((payload) => payload);
-
-    const title = 'New Area Title';
-    const areaInput = component.getByTestId('Add area');
-
-    fireEvent.changeText(areaInput, title);
-    fireEvent(areaInput, 'onSubmitEditing');
-
-    expect(areasSliceActions.createArea).toHaveBeenCalledTimes(1);
-    expect(areasSliceActions.createArea).toHaveBeenCalledWith({ title });
-    expect(store.dispatch).toHaveBeenCalledTimes(1);
-    expect(store.dispatch).toHaveBeenCalledWith({ title });
   });
 });

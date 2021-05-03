@@ -20,7 +20,7 @@ const areasHandlers = function(mock) {
       }
     ]
   });
-  mock.onDelete(/\/areas\/(\w+$)/).reply(200);
+  mock.onDelete(/\/areas\/((\w|-)+$)/).reply(200);
   mock.onPost('/todos').reply(function(config) {
     const { todo } = qs.parse(config.data);
     
@@ -35,8 +35,8 @@ const areasHandlers = function(mock) {
       }
     ]
   });
-  mock.onPatch(/\/todos\/(\w+$)/).reply(200);
-  mock.onDelete(/\/todos\/(\w+$)/).reply(200);
+  mock.onPatch(/\/todos\/((\w|-)+$)/).reply(200);
+  mock.onDelete(/\/todos\/((\w|-)+$)/).reply(200);
 }
 
 export default areasHandlers;

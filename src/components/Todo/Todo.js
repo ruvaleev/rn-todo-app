@@ -49,19 +49,20 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   button: {
     flexDirection: 'row',
     marginRight: '1rem',
     fontSize: 16,
     lineHeight: 18,
-    paddingLeft: '3rem'
+    maxWidth: '100%'
   },
   icon: {
     minWidth: '1rem',
     width: '1rem',
-    height: '1rem'
+    height: '1rem',
+    marginRight: '1rem'
   },
   checked: {
     textDecorationLine: 'line-through'

@@ -7,10 +7,7 @@ import { StyleSheet, Text } from 'react-native';
 function DemoModeMessage({ isDemo }) {
   const { t } = useTranslation();
 
-  return isDemo
-    && (
-    <Text style={styles.message}>{t('demo mode message')}</Text>
-    );
+  return isDemo && <Text style={styles.message}>{t('demo mode message')}</Text>
 }
 
 const mapStateToProps = (state) => ({

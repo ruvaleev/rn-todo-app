@@ -1,19 +1,9 @@
 import { connect } from 'react-redux';
 
-import { chooseArea, removeArea } from '../../redux/slices/areas';
 import Area from './Area';
 
 const mapStateToProps = (state) => ({
-  area: state.areasReducer.areas.find((area) => area.choosen),
-  isLoading: state.areasReducer.isLoading,
-  isError: state.areasReducer.isError,
-  error: state.areasReducer.error,
-  areas: state.areasReducer.areas,
+  area: state.areasReducer.areas.find((area) => area.choosen)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  chooseArea: (data) => dispatch(chooseArea(data)),
-  removeArea: (data) => dispatch(removeArea(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Area);
+export default connect(mapStateToProps)(Area);
