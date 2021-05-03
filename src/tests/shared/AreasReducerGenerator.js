@@ -11,7 +11,7 @@ function generateArea({ title, index }) {
         completed: true,
       },
     ],
-    created_at: new Date(),
+    created_at: new Date().toString(),
   };
 }
 
@@ -33,22 +33,22 @@ export const defaultAreas = [{
       id: 'todo_1',
       title: 'Aspernatur totam excepturi dicta estplaceat tempore.',
       completed: false,
-      created_at: new Date(),
+      created_at: new Date().toString(),
     },
   ],
-  created_at: new Date(),
+  created_at: new Date().toString(),
 },
 {
   id: 'area_2',
   title: 'Карьера',
   todos: [],
-  created_at: new Date(),
+  created_at: new Date().toString(),
 },
 {
   id: 'area_3',
   title: 'Образование',
   todos: [],
-  created_at: new Date(),
+  created_at: new Date().toString(),
 }];
 
 function getRandomInt(max) {
