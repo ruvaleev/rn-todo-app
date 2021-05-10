@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import loading from '../../assets/icons/loading.svg';
+import LoadingIcon from '../../assets/icons/LoadingIcon';
 import { Animated, Easing, StyleSheet, View } from 'react-native';
 
 function LoadingScreen({ isLoading }) {
@@ -16,7 +16,7 @@ function LoadingScreen({ isLoading }) {
       toValue: 1,
       duration: 3000,
       easing: Easing.linear,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start(() => startImageRotateFunction());
   };
 
@@ -27,7 +27,12 @@ function LoadingScreen({ isLoading }) {
 
   return (
     <View testID='LoadingIcon' style={styles.loadingContainer}>
-      {isLoading && <Animated.Image style={[styles.image, {transform: [{rotate: rotateData}]}]} source={loading}/>}
+      {
+        isLoading &&
+          <Animated.View style={{transform: [{rotate: rotateData}], width: 32, height: 32}}>
+            <LoadingIcon width={32} height={32}/>
+          </Animated.View>
+      }
     </View>
   );
 }
@@ -67,14 +72,10 @@ const styles = StyleSheet.create({
   container: {
     height: '100%'
   },
-  image: {
-    width: '2rem',
-    height: '2rem',
-    zIndex: 1
-  },
   loadingContainer: {
     position: 'absolute',
-    top: 0,
+    top: 20,
+    right: 20,
     zIndex: 1
   }
 });

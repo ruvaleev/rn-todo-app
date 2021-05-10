@@ -5,6 +5,7 @@ import { render } from '@testing-library/react-native'
 
 import Area from '../../../components/Area';
 import Store from '../../shared/Store';
+import MenusReducerGenerator from '../../shared/MenusReducerGenerator';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({t: key => key})
@@ -24,13 +25,27 @@ describe('Area', () => {
   let component;
   let store;
 
-  beforeEach(() => {
-    store = mockStore(Store());
-    area = store.getState().areasReducer.areas.find((area) => area.choosen);
-    component = renderWithStore(store);
-  });
+  describe('when menusReducer IsRolled flag is true', () => {
+    beforeEach(() => {
+      store = mockStore(Store({ menusReducer: MenusReducerGenerator({ isRolled: true }) }));
+      area = store.getState().areasReducer.areas.find((area) => area.choosen);
+      component = renderWithStore(store);
+    });
 
-  it("renders titles of choosen area's todos", () => {
-    area.todos.forEach((todo) => expect(component.queryByText(todo.title)).toBeTruthy());
-  });
+    it("renders titles of choosen area's todos", () => {
+      area.todos.forEach((todo) => expect(component.queryByText(todo.title)).toBeTruthy());
+    });
+  })
+
+  describe('when menusReducer isRolled flag is false', () => {
+    beforeEach(() => {
+      store = mockStore(Store({ menusReducer: MenusReducerGenerator({ isRolled: false }) }));
+      area = store.getState().areasReducer.areas.find((area) => area.choosen);
+      component = renderWithStore(store);
+    });
+
+    it("doesn't render titles of choosen area's todos", () => {
+      area.todos.forEach((todo) => expect(component.queryByText(todo.title)).toBeFalsy());
+    });
+  })
 });

@@ -43,22 +43,22 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: '1rem',
+    marginTop: 16,
     borderColor: 'black',
     borderWidth: 1,
     width: '100%',
     zIndex: 10
   },
   input: {
-    height: '1.5rem',
-    paddingHorizontal: '2rem',
+    height: 24,
+    paddingHorizontal: 32,
     width: '100%',
     fontStyle: 'italic'
   },
   button: {
-    height: '1.5rem',
-    width: '1.5rem',
-    marginLeft: '-1.5rem'
+    height: 24,
+    width: 24,
+    marginLeft: -24
   },
   icon: {
     minWidth: '100%',

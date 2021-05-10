@@ -6,6 +6,7 @@ import configureStore from 'redux-mock-store';
 import AreasMenu from '../../../components/AreasMenu';
 import Store from '../../shared/Store';
 import * as areasSliceActions from '../../../redux/slices/areas';
+import * as menusSliceActions from '../../../redux/slices/menus';
 import AreasReducerGenerator from '../../shared/AreasReducerGenerator';
 
 function renderWithStore(store) {
@@ -62,5 +63,15 @@ describe('AreasMenu', () => {
     expect(areasSliceActions.chooseArea).toHaveBeenCalledWith(nonChoosenArea.id);
     expect(store.dispatch).toHaveBeenCalledTimes(1);
     expect(store.dispatch).toHaveBeenCalledWith(nonChoosenArea.id);
+  });
+
+  it('dispatches toggleIsRolled action on dropdown menu header click', () => {
+    menusSliceActions.toggleIsRolled = jest.fn().mockImplementation();
+
+    const choosenAreaTitle = component.getByTestId('DropdownHeader')
+    fireEvent.press(choosenAreaTitle);
+
+    expect(menusSliceActions.toggleIsRolled).toHaveBeenCalledTimes(1);
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
   });
 });

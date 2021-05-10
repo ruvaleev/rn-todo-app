@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import i18n from 'i18next';
 
 import { chooseNewLocale } from './functions';
-import home from '../../assets/icons/home.svg';
-import en from '../../assets/icons/en-lang.svg';
-import ru from '../../assets/icons/ru-lang.svg';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+
+import EnLangIcon from '../../assets/icons/EnLangIcon.js'
+import HomeIcon from '../../assets/icons/HomeIcon.js'
+import RuLangIcon from '../../assets/icons/RuLangIcon.js'
+
+
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 function LanguagePanel() {
   const [locale, setLocale] = useState(chooseNewLocale());
-
-  const localeIcon = i18n.language === 'en' ? en : ru;
 
   return (
     <TouchableOpacity
@@ -19,7 +20,11 @@ function LanguagePanel() {
       onPress={() => {i18n.changeLanguage(locale); setLocale(chooseNewLocale())}}
       testID='ChangeLanguage'
     >
-      <Image source={localeIcon} style={styles.icon}/>
+      {
+        i18n.language === 'en' ?
+          <EnLangIcon width={32} height={32}/> :
+          <RuLangIcon width={32} height={32}/>
+      }
     </TouchableOpacity>
   );
 }
@@ -27,7 +32,7 @@ function LanguagePanel() {
 function HomeLink({ navigation }) {
   return (
     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')} testID='HomeLink' >
-      <Image source={home} style={styles.icon}/>
+      <HomeIcon width={32} height={32}/>
     </TouchableOpacity>
     
   );
@@ -55,20 +60,17 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: '0.5rem'
+    marginHorizontal: 8
   },
   controlPanel: {
     display: 'flex',
     flexDirection: 'row',
-    bottom: '10vh',
     justifyContent: 'flex-end',
     zIndex: 11,
-    marginTop: '2rem',
-
-  },
-  icon: {
-    width: '2rem',
-    height: '2rem',
+    marginTop: 32,
+    bottom: 32,
+    width: 100,
+    height: 100
   }
 });
 

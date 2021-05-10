@@ -21,7 +21,7 @@ function App() {
           headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: '#fff',
-            height: '2rem'
+            height: 32
           },
           headerTitleStyle :{
             fontWeight: 'bold',

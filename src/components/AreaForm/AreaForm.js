@@ -8,7 +8,7 @@ function AreaForm({ createArea }) {
   const [title, setTitle] = useState('')
 
   return (
-    <View style={{justifyContent: 'flex-end', flexDirection: 'row', zIndex: 20}}>
+    <View style={styles.container}>
       <View style={[styles.form]}>
         <TextInput
           style={styles.input}
@@ -33,15 +33,21 @@ AreaForm.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    bottom: 0,
+    width: '100%'
+  },
   form: {
     display: 'flex',
     alignItems: 'center',
-    right: '0',
+    right: 0,
     flexBasis: '90%'
   },
   input: {
-    height: '1.5rem',
-    paddingEnd: '0.5rem',
+    height: 24,
+    paddingEnd: 8,
     width: '100%',
     textAlign: 'right',
     fontSize: 14,
@@ -50,7 +56,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     borderBottomColor: '#D83E1D',
     borderBottomWidth: 1,
-    minWidth: '17rem',
-    marginRight: '2rem'
+    minWidth: 272,
+    marginRight: 32
   }
 });

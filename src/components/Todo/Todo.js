@@ -53,16 +53,16 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: 'row',
-    marginRight: '1rem',
+    marginRight: 16,
     fontSize: 16,
     lineHeight: 18,
     maxWidth: '100%'
   },
   icon: {
-    minWidth: '1rem',
-    width: '1rem',
-    height: '1rem',
-    marginRight: '1rem'
+    minWidth: 16,
+    width: 16,
+    height: 16,
+    marginRight: 16
   },
   checked: {
     textDecorationLine: 'line-through'
