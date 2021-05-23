@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import RemoveIcon from '../shared/RemoveIcon';
-import square from '../../assets/icons/square.svg';
-import squareCheck from '../../assets/icons/square-check.svg';
+import RemoveButton from '../shared/RemoveButton';
+import SquareCheckIcon from '../../assets/icons/SquareCheckIcon.js';
+import SquareIcon from '../../assets/icons/SquareIcon.js';
 
 const TodoLabel = ({ todo, toggleReady }) => (
-  <TouchableOpacity onPress={() => toggleReady(todo.id)} style={[styles.button, (todo.completed && styles.checked)]}>
-    <Image source={todo.completed ? squareCheck : square} style={styles.icon}/>
-    <Text >{todo.title}</Text>
+  <TouchableOpacity onPress={() => toggleReady(todo.id)} style={styles.button}>
+    <Text style={[todo.completed && styles.checked, { width: '90%' }]}>{todo.title}</Text>
+    {todo.completed ? <SquareCheckIcon width={24} height={24}/> : <SquareIcon width={24} height={24}/>}
   </TouchableOpacity>
 );
 
@@ -17,8 +17,8 @@ const Todo = ({
   areaId, todo, toggleReady, removeTodo,
 }) => (
   <View style={styles.container}>
+    <RemoveButton callback={() => removeTodo({ id: todo.id, areaId })} />
     <TodoLabel todo={todo} toggleReady={toggleReady} />
-    <RemoveIcon callback={() => removeTodo({ id: todo.id, areaId })} />
   </View>
 );
 
@@ -48,23 +48,21 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center'
   },
   button: {
+    alignItems: 'center',
     flexDirection: 'row',
-    marginRight: 16,
+    justifyContent: 'space-between',
     fontSize: 16,
     lineHeight: 18,
-    maxWidth: '100%'
-  },
-  icon: {
-    minWidth: 16,
-    width: 16,
-    height: 16,
-    marginRight: 16
+    maxWidth: '90%',
+    width: '90%',
+    marginVertical: 8
   },
   checked: {
-    textDecorationLine: 'line-through'
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid'
   }
 });

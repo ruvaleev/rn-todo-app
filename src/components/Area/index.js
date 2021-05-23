@@ -4,7 +4,7 @@ import Area from './Area';
 
 const mapStateToProps = (state) => ({
   area: state.areasReducer.areas.find((area) => area.choosen),
-  isRolled: state.menusReducer.isRolled
+  dropdownIsRolled: state.menusReducer.dropdownIsRolled
 });
 
 export default connect(mapStateToProps)(Area);

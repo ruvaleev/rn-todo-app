@@ -1,42 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import i18n from 'i18next';
 
-import { chooseNewLocale } from './functions';
-
-import EnLangIcon from '../../assets/icons/EnLangIcon.js'
-import HomeIcon from '../../assets/icons/HomeIcon.js'
-import RuLangIcon from '../../assets/icons/RuLangIcon.js'
+import HomeLink from './HomeLink.js'
+import LanguagePanel from './LanguagePanel.js'
 
 
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-
-function LanguagePanel() {
-  const [locale, setLocale] = useState(chooseNewLocale());
-
-  return (
-    <TouchableOpacity
-      style={styles.button}
-      onPress={() => {i18n.changeLanguage(locale); setLocale(chooseNewLocale())}}
-      testID='ChangeLanguage'
-    >
-      {
-        i18n.language === 'en' ?
-          <EnLangIcon width={32} height={32}/> :
-          <RuLangIcon width={32} height={32}/>
-      }
-    </TouchableOpacity>
-  );
-}
-
-function HomeLink({ navigation }) {
-  return (
-    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')} testID='HomeLink' >
-      <HomeIcon width={32} height={32}/>
-    </TouchableOpacity>
-    
-  );
-}
+import { StyleSheet, View } from 'react-native';
 
 function ControlPanel({ navigation, providedStyle }) {
   return (
@@ -57,11 +26,6 @@ const LayoutWithControlPanel = ({ children, navigation, providedStyle }) => (
 export default LayoutWithControlPanel;
 
 const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 8
-  },
   controlPanel: {
     display: 'flex',
     flexDirection: 'row',
@@ -77,10 +41,6 @@ const styles = StyleSheet.create({
 ControlPanel.propTypes = {
   navigation: PropTypes.object.isRequired,
   providedStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
-};
-
-HomeLink.propTypes = {
-  navigation: PropTypes.object.isRequired,
 };
 
 LayoutWithControlPanel.propTypes = {

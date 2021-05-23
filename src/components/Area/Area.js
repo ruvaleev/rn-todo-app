@@ -4,9 +4,9 @@ import { StyleSheet, View } from 'react-native';
 
 import TodosCard from '../TodosCard';
 
-function Area({area, isRolled}) {
+function Area({area, dropdownIsRolled}) {
   return (
-    isRolled &&
+    dropdownIsRolled &&
       <View style={styles.container}>
         {area && <TodosCard />}
       </View>
@@ -27,7 +27,7 @@ Area.propTypes = {
       ],
     ),
   ),
-  isRolled: PropTypes.bool.isRequired
+  dropdownIsRolled: PropTypes.bool.isRequired
 };
 
 Area.defaultProps = {

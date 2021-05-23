@@ -41,7 +41,14 @@ export const defaultAreas = [{
 {
   id: 'area_2',
   title: 'Карьера',
-  todos: [],
+  todos: [
+    {
+      id: 'todo_2_1',
+      title: 'Nulla perferendis maiores ut voluptatum. Ut nesciunt maxime inventore alias impedit nulla.',
+      completed: false,
+      created_at: new Date().toString(),
+    },
+  ],
   created_at: new Date().toString(),
 },
 {

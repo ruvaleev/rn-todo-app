@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     position: 'absolute',
-    bottom: '0px',
+    bottom: 0,
     color: 'rgba(254, 226, 226, 1)',
     fontWeight: '900',
     width: '100%',

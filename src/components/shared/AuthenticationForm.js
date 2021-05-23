@@ -46,25 +46,24 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '2rem',
-    marginBottom: '10vh'
+    marginTop: 32
   },
   input: {
-    height: '1.5rem',
-    paddingLeft: '2rem',
-    marginTop: '0.75rem',
-    width: '100%',
+    height: 24,
+    paddingLeft: 32,
+    marginTop: 12,
+    width: 200,
     fontStyle: 'italic',
     borderColor: 'black',
     borderWidth: 1
   },
   button: {
     justifyContent: 'center',
-    height: '1.5rem',
-    marginTop: '0.75rem',
-    width: '100%',
+    alignItems: 'center',
+    height: 24,
+    marginTop: 12,
+    width: 200,
     borderColor: 'black',
-    borderWidth: 1,
-    textAlign: 'center'
+    borderWidth: 1
   }
 });

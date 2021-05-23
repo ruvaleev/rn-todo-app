@@ -25,9 +25,9 @@ describe('Area', () => {
   let component;
   let store;
 
-  describe('when menusReducer IsRolled flag is true', () => {
+  describe('when menusReducer dropdownIsRolled flag is true', () => {
     beforeEach(() => {
-      store = mockStore(Store({ menusReducer: MenusReducerGenerator({ isRolled: true }) }));
+      store = mockStore(Store({ menusReducer: MenusReducerGenerator({ dropdownIsRolled: true }) }));
       area = store.getState().areasReducer.areas.find((area) => area.choosen);
       component = renderWithStore(store);
     });
@@ -37,9 +37,9 @@ describe('Area', () => {
     });
   })
 
-  describe('when menusReducer isRolled flag is false', () => {
+  describe('when menusReducer dropdownIsRolled flag is false', () => {
     beforeEach(() => {
-      store = mockStore(Store({ menusReducer: MenusReducerGenerator({ isRolled: false }) }));
+      store = mockStore(Store({ menusReducer: MenusReducerGenerator({ dropdownIsRolled: false }) }));
       area = store.getState().areasReducer.areas.find((area) => area.choosen);
       component = renderWithStore(store);
     });

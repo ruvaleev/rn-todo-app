@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 
 import AreasCard from '../AreasCard';
 import DemoModeMessage from '../shared/DemoModeMessage';
-import LayoutWithControlPanel from '../shared/LayoutWithControlPanel';
+import PlannerMenu from '../PlannerMenu';
 
-function Planner({ fetchAreas, navigation, isAuthenticated, setError }) {
+function Planner({ fetchAreas, isAuthenticated, navigation, setError }) {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -21,11 +21,8 @@ function Planner({ fetchAreas, navigation, isAuthenticated, setError }) {
 
   return (
     <>
-      <LayoutWithControlPanel navigation={navigation} providedStyle={styles.controlPanel}>
-        <View style={styles.container}>
-          <AreasCard/>
-        </View>
-      </LayoutWithControlPanel>
+      <View style={styles.container}><AreasCard/></View>
+      <PlannerMenu navigation={navigation}/>
       <DemoModeMessage />
     </>
   );
@@ -39,15 +36,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height: '100%',
     width: '100%'
-  },
-  controlPanel: {
-    backgroundColor: '#fff',
-    marginTop: '0rem',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    right: 0,
-    padding: '0.5rem',
   }
 });
 

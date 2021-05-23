@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     zIndex: 20
   },
   button: {
-    padding: '1rem',
+    padding: 16,
     zIndex: 20,
     borderColor: 'black',
     borderWidth: 1,

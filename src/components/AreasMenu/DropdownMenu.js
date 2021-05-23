@@ -1,15 +1,14 @@
 
 import React, { useState } from 'react';
 import {
-  Dimensions, Image, View, Text, TouchableOpacity, ScrollView, Animated, Easing, StyleSheet
+  View, Text, TouchableOpacity, ScrollView, Animated, Easing, StyleSheet
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-import arrowDown from '../../assets/icons/arrow-down.svg';
-import remove from '../../assets/icons/remove.svg';
+import ArrowDownIcon from '../../assets/icons/ArrowDownIcon.js';
+import RemoveButton from '../shared/RemoveButton';
 
-function DropdownMenu({ elements, choosenIndex, onChooseCallback, onRemoveCallback }) {
-  const [isRolled, toggleIsRolled] = useState(true)
+function DropdownMenu({ elements, choosenIndex, dropdownIsRolled, toggleDropdownIsRolled, onChooseCallback, onRemoveCallback }) {
   const [rotationAnimation] = useState(new Animated.Value(0))
 
   const choosenElement = elements[choosenIndex]
@@ -18,7 +17,8 @@ function DropdownMenu({ elements, choosenIndex, onChooseCallback, onRemoveCallba
     Animated.timing(rotationAnimation, {
       toValue: 0.5,
       duration: 300,
-      easing: Easing.linear
+      easing: Easing.linear,
+      useNativeDriver: true
     }).start();
   }
 
@@ -26,28 +26,27 @@ function DropdownMenu({ elements, choosenIndex, onChooseCallback, onRemoveCallba
     Animated.timing(rotationAnimation, {
       toValue: 0,
       duration: 300,
-      easing: Easing.linear
+      easing: Easing.linear,
+      useNativeDriver: true
     }).start();
   }
 
   function toggleRoll() {
-    isRolled ? openPanel() : closePanel()
-    toggleIsRolled(!isRolled)
+    dropdownIsRolled ? openPanel() : closePanel()
+    toggleDropdownIsRolled()
   }
 
-  var height = !isRolled && Math.min(Dimensions.get('window').height * 0.8, (elements.length * 40) + 48);
-
+  var height = dropdownIsRolled ? 20 : '100%'
   return (
-    <View style={{ flexDirection: 'column', flex: 1 }}>
-      <View style={{ flexDirection: 'row', backgroundColor: 'white', overflow: 'scroll', height: height }}>
+    <View style={{ flexDirection: 'column', flex: 1, height: height }}>
+      <View style={[styles.dropdownContainer, { height: height }]}>
         <SelectHeader
           title={choosenElement}
           callback={() => toggleRoll()}
           onRemoveCallback={onRemoveCallback}
-          rotationAnimation={rotationAnimation}
-          isActive={!isRolled}/>
+          rotationAnimation={rotationAnimation}/>
         {
-          isRolled ||
+          dropdownIsRolled ||
           <ElementsList 
             elements={elements} 
             choosenIndex={choosenIndex} 
@@ -59,35 +58,37 @@ function DropdownMenu({ elements, choosenIndex, onChooseCallback, onRemoveCallba
   )
 }
 
-function SelectHeader({ title, callback, onRemoveCallback, rotationAnimation, isActive}) {
+function SelectHeader({ title, callback, onRemoveCallback, rotationAnimation}) {
   return(
     <View style={styles.headerButton}>
-      <View style={{flexDirection: 'row'}}>
-        <RemoveIcon
-          onRemoveCallback={onRemoveCallback}
-          providedStyle={styles.removeIcon}
+      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
+        <RemoveButton
+          callback={onRemoveCallback}
           title={title}
+          iconStyle={{stroke: '#D83E1D'}}
         />
         <TouchableOpacity
           onPress={callback}
           activeOpacity={1}
           style={styles.header}
+          testID='DropdownHeaderTitle'
         >
-          <Text style={[isActive ? styles.activeTint : styles.regularTint, {}]}>{title}</Text>
-          <DropdownIcon  rotationAnimation={rotationAnimation} isActive={isActive}/>
+          <Text style={styles.activeTint}>{title}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={callback}
+          activeOpacity={1}
+          style={[styles.header, { paddingLeft: 32 }]}
+          testID='DropdownHeaderIcon'
+        >
+          <DropdownIcon  rotationAnimation={rotationAnimation}/>
         </TouchableOpacity>
       </View>
     </View>
   )
 }
 
-const RemoveIcon = ({ onRemoveCallback, providedStyle, title }) => (
-  <TouchableOpacity onPress={() => onRemoveCallback(title)} style={[styles.button, providedStyle]} testID='RemoveIcon'>
-    <Image source={remove} style={styles.icon}/>
-  </TouchableOpacity>
-);
-
-function DropdownIcon({ rotationAnimation, isActive }) {
+function DropdownIcon({ rotationAnimation }) {
   const transform = [
     {
       rotateZ: rotationAnimation.interpolate({
@@ -97,33 +98,29 @@ function DropdownIcon({ rotationAnimation, isActive }) {
     }
   ]
   return(
-    <Animated.Image
-      source={arrowDown}
-      style={[
-        styles.headerIcon,
-        { transform: transform },
-        isActive ? styles.activeIcon : styles.regularIcon
-      ]}
-    />
+    <Animated.View style={{ transform: transform }}>
+      <ArrowDownIcon width={24} height={24} stroke={'#D83E1D'}/>
+    </Animated.View>
   )
 }
 
 function ElementsList({ elements, choosenIndex, onChooseCallback, toggleRoll }) {
+  var height = (elements.length * 40);
   return(
-    <View style={styles.elementsListContainer}>
+    <View style={[styles.elementsListContainer, { height: height }]}>
       <ScrollView style={styles.elementsListScrollView}>
         {elements.map((title, index) => (
           <TouchableOpacity
             key={index}
             activeOpacity={1}
-            style={styles.elementsListButton}
+            style={{flex: 1, height: 44}}
             onPress={() => {
               onChooseCallback(title)
               toggleRoll()
             }}
           >
             <Element title={title} isActive={index === choosenIndex}/>
-            <View style={styles.elementsListBreakLine} />
+            <View style={{ backgroundColor: '#F6F6F6', height: 1, marginLeft: 15 }} />
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -146,6 +143,8 @@ DropdownMenu.propTypes = {
     PropTypes.string,
   ),
   choosenIndex: PropTypes.number,
+  dropdownIsRolled: PropTypes.bool,
+  toggleDropdownIsRolled: PropTypes.func,
   onChooseCallback: PropTypes.func,
   onRemoveCallback: PropTypes.func
 };
@@ -153,19 +152,11 @@ DropdownMenu.propTypes = {
 SelectHeader.propTypes = {
   title: PropTypes.string,
   callback: PropTypes.func,
-  isActive: PropTypes.bool,
   rotationAnimation: PropTypes.object,
   onRemoveCallback: PropTypes.func
 };
 
-RemoveIcon.propTypes = {
-  onRemoveCallback: PropTypes.func,
-  providedStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
-  title: PropTypes.string
-}
-
 DropdownIcon.propTypes = {
-  isActive: PropTypes.bool,
   rotationAnimation: PropTypes.object,
   onRemoveCallback: PropTypes.func
 };
@@ -190,7 +181,15 @@ const styles = StyleSheet.create({
     tintColor: '#D83E1D'
   },
   activeTint: {
-    color: '#D83E1D'
+    color: '#D83E1D',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  dropdownContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    overflow: 'scroll',
+    width: '100%'
   },
   element: {
     fontSize: 14,
@@ -206,21 +205,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     flexDirection: 'row'
   },
-  elementsListBreakLine: {
-    backgroundColor: '#F6F6F6',
-    height: 1,
-    marginLeft: 15
-  },
-  elementsListButton: {
-    flex: 1,
-    height: 44
-  },
   elementsListContainer: {
     position: 'absolute',
     left: 0,
     right: 0,
     top: 48,
-    bottom: 0
+    bottom: 0,
+    zIndex: 100
   },
   elementsListScrollView: {
     position: 'absolute',
@@ -232,32 +223,16 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    fontSize: 24
   },
   headerButton: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start'
   },
-  headerIcon: {
-    width: 16,
-    height: 16,
-    marginLeft: 16,
-    marginRight: -32
-  },
-  regularIcon: {
-    tintColor: 'black'
-  },
   regularTint: {
-    color: 'black'
-  },
-  removeIcon: {
-    marginLeft: -32,
-    marginRight: 16
-  },
-  icon: {
-    minWidth: '1rem',
-    width: '1rem',
-    height: '1rem'
+    color: '#D83E1D',
+    fontSize: 16
   }
 });

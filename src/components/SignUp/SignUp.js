@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import withLoading from '../HOC/withLoading';
 import AuthenticationForm from '../shared/AuthenticationForm';
@@ -9,11 +9,8 @@ import Errors from '../shared/Errors';
 import LayoutWithControlPanel from '../shared/LayoutWithControlPanel';
 
 function RegistrationForm({ onSubmit, navigation }) {
-  const { t } = useTranslation();
-
   return (
     <LayoutWithControlPanel navigation={navigation}>
-      <Text>{t('sign up')}</Text>
       <AuthenticationForm onSubmit={onSubmit} />
     </LayoutWithControlPanel>
   );
@@ -60,7 +57,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 'calc(100vh - 2rem)',
+    height: '100%',
     backgroundColor: '#fff',
   },
 });
