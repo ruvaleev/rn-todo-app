@@ -36,7 +36,7 @@ function DropdownMenu({ elements, choosenIndex, dropdownIsRolled, toggleDropdown
     toggleDropdownIsRolled()
   }
 
-  var height = dropdownIsRolled ? 20 : '100%'
+  var height = dropdownIsRolled ? 60 : '100%'
   return (
     <View style={{ flexDirection: 'column', flex: 1, height: height }}>
       <View style={[styles.dropdownContainer, { height: height }]}>
@@ -61,7 +61,7 @@ function DropdownMenu({ elements, choosenIndex, dropdownIsRolled, toggleDropdown
 function SelectHeader({ title, callback, onRemoveCallback, rotationAnimation}) {
   return(
     <View style={styles.headerButton}>
-      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
+      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', height: 60}}>
         <RemoveButton
           callback={onRemoveCallback}
           title={title}
@@ -70,7 +70,7 @@ function SelectHeader({ title, callback, onRemoveCallback, rotationAnimation}) {
         <TouchableOpacity
           onPress={callback}
           activeOpacity={1}
-          style={styles.header}
+          style={[styles.header, { flexBasis: '80%', height: '100%', alignItems: 'center' }]}
           testID='DropdownHeaderTitle'
         >
           <Text style={styles.activeTint}>{title}</Text>
@@ -78,7 +78,7 @@ function SelectHeader({ title, callback, onRemoveCallback, rotationAnimation}) {
         <TouchableOpacity
           onPress={callback}
           activeOpacity={1}
-          style={[styles.header, { paddingLeft: 32 }]}
+          style={[styles.header, { flexBasis: '10%', height: '100%', alignItems: 'center' }]}
           testID='DropdownHeaderIcon'
         >
           <DropdownIcon  rotationAnimation={rotationAnimation}/>
@@ -131,7 +131,7 @@ function ElementsList({ elements, choosenIndex, onChooseCallback, toggleRoll }) 
 function Element({title, isActive}) {
   return (
     <View style={styles.elementContainer}>
-      <Text style={[styles.element, isActive ? styles.activeTint : styles.regularTint]}>{title}</Text>
+      <Text style={isActive ? styles.activeTint : styles.regularTint}>{title}</Text>
     </View>
   )
 }
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   activeTint: {
     color: '#D83E1D',
-    fontSize: 16,
+    fontSize: 24,
     fontWeight: 'bold'
   },
   dropdownContainer: {
@@ -190,13 +190,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     overflow: 'scroll',
     width: '100%'
-  },
-  element: {
-    fontSize: 14,
-    color: 'black',
-    height: 40,
-    alignItems: 'center',
-    display: 'flex'
   },
   elementContainer: {
     flex: 1,
@@ -209,7 +202,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    top: 48,
+    top: 60,
     bottom: 0,
     zIndex: 100
   },
@@ -223,8 +216,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'center',
-    fontSize: 24
+    justifyContent: 'center'
   },
   headerButton: {
     flex: 1,
@@ -233,6 +225,6 @@ const styles = StyleSheet.create({
   },
   regularTint: {
     color: '#D83E1D',
-    fontSize: 16
+    fontSize: 24
   }
 });

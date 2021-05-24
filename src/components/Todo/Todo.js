@@ -8,7 +8,7 @@ import SquareIcon from '../../assets/icons/SquareIcon.js';
 
 const TodoLabel = ({ todo, toggleReady }) => (
   <TouchableOpacity onPress={() => toggleReady(todo.id)} style={styles.button}>
-    <Text style={[todo.completed && styles.checked, { width: '90%' }]}>{todo.title}</Text>
+    <Text style={[todo.completed && styles.checked, { width: '90%', fontSize: 18 }]}>{todo.title}</Text>
     {todo.completed ? <SquareCheckIcon width={24} height={24}/> : <SquareIcon width={24} height={24}/>}
   </TouchableOpacity>
 );
@@ -55,8 +55,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    fontSize: 16,
-    lineHeight: 18,
     maxWidth: '90%',
     width: '90%',
     marginVertical: 8

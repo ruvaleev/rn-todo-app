@@ -29,5 +29,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#D83E1D',
+    fontSize: 24,
+    marginVertical: 4
   },
 });
