@@ -1,8 +1,9 @@
 {
   "expo": {
     "entryPoint": "./src/App.js",
-    "name": "rn-todo-app",
-    "slug": "rn-todo-app",
+    "name": "simple_planner",
+    "sdkVersion": "41.0.0",
+    "slug": "simple_planner",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
