@@ -2,8 +2,7 @@ import axios from 'axios';
 
 import withMocks from './withMocks';
 
-const ROOT_URL = process.env.ROOT_URL || 'http://localhost:4567';
-const API_KEY = process.env.API_KEY || 'dev_api_key';
+import { API_KEY, ROOT_URL } from '../../../.env.json';
 
 const axiosBackendInstance = axios.create({
   baseURL: ROOT_URL,
