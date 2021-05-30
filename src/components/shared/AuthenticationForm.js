@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 function AuthenticationForm({ onSubmit }) {
   const { t } = useTranslation();
-
-  let state = { email: '', password: '' }
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   return (
     <View style={styles.form}>
@@ -14,19 +14,16 @@ function AuthenticationForm({ onSubmit }) {
         style={styles.input}
         placeholder={t('email')}
         keyboardType='email-address'
-        onChangeText={(text) => state.email = text}
+        onChangeText={(text) => setEmail(text)}
       />
       <TextInput
         style={styles.input}
         placeholder={t('password')}
         secureTextEntry={true}
-        onChangeText={(text) => state.password = text}
+        onChangeText={(text) => setPassword(text)}
       />
       <TouchableOpacity style={styles.button} onPress={() => {
-        onSubmit({
-          email: state.email,
-          password: state.password,
-        });
+        onSubmit({ email, password  });
       }} >
         <Text>{t('submit')}</Text>
       </TouchableOpacity>
