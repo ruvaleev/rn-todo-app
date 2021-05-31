@@ -64,6 +64,7 @@ function SelectHeader({ title, callback, onRemoveCallback, rotationAnimation}) {
       <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', height: 60}}>
         <RemoveButton
           callback={onRemoveCallback}
+          providedStyle={{ flexBasis: '10%' }}
           title={title}
           iconStyle={{stroke: '#D83E1D'}}
         />
@@ -78,7 +79,7 @@ function SelectHeader({ title, callback, onRemoveCallback, rotationAnimation}) {
         <TouchableOpacity
           onPress={callback}
           activeOpacity={1}
-          style={[styles.header, { flexBasis: '10%', height: '100%', alignItems: 'center' }]}
+          style={[styles.header, { flexBasis: '10%', height: '100%', alignItems: 'center', justifyContent: 'flex-end' }]}
           testID='DropdownHeaderIcon'
         >
           <DropdownIcon  rotationAnimation={rotationAnimation}/>
