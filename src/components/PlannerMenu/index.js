@@ -4,6 +4,7 @@ import { toggleFormIsShown } from '../../redux/slices/menus';
 import PlannerMenu from './PlannerMenu';
 
 const mapStateToProps = (state) => ({
+  areasPresent: state.areasReducer.areas.length > 0,
   dropdownIsRolled: state.menusReducer.dropdownIsRolled
 });
 

@@ -5,6 +5,7 @@ import configureStore from 'redux-mock-store';
 
 import ModalForm from '../../../components/ModalForm';
 import Store from '../../shared/Store';
+import AreasReducerGenerator from '../../shared/AreasReducerGenerator';
 import MenusReducerGenerator from '../../shared/MenusReducerGenerator';
 import * as areasSliceActions from '../../../redux/slices/areas';
 import * as menusSliceActions from '../../../redux/slices/menus';
@@ -79,6 +80,45 @@ describe('ModalForm', () => {
     describe('when dropdownIsRolled flag is false', () => {
       beforeEach(() => {
         store = mockStore(Store({ menusReducer: MenusReducerGenerator({ dropdownIsRolled: false, formIsShown: true }) }));
+        store.dispatch = jest.fn();
+        component = renderWithStore(store);
+      });
+  
+      it('dispatches createArea action on area form submit', () => {
+        areasSliceActions.createArea = jest.fn().mockImplementation((payload) => payload);
+    
+        const title = 'New Area Title';
+        const inputField = component.getByTestId('AddArea');
+    
+        fireEvent.changeText(inputField, title);
+        fireEvent(inputField, 'onSubmitEditing');
+    
+        expect(areasSliceActions.createArea).toHaveBeenCalledTimes(1);
+        expect(areasSliceActions.createArea).toHaveBeenCalledWith({ title });
+        expect(store.dispatch).toHaveBeenCalledTimes(2);
+        expect(store.dispatch).toHaveBeenCalledWith({ title });
+      });
+  
+      it('dispatches toggleFormIsShown action on area form submit', () => {
+        menusSliceActions.toggleFormIsShown = jest.fn().mockImplementation();
+    
+        const title = 'New Area Title';
+        const inputField = component.getByTestId('AddArea');
+    
+        fireEvent.changeText(inputField, title);
+        fireEvent(inputField, 'onSubmitEditing');
+    
+        expect(menusSliceActions.toggleFormIsShown).toHaveBeenCalledTimes(1);
+        expect(store.dispatch).toHaveBeenCalledTimes(2);
+      });
+    });
+
+    describe('when user has no areas yet', () => {
+      beforeEach(() => {
+        store = mockStore(Store({
+          areasReducer: AreasReducerGenerator({ areasCount: 0 }),
+          menusReducer: MenusReducerGenerator({ dropdownIsRolled: true, formIsShown: true })
+        }));
         store.dispatch = jest.fn();
         component = renderWithStore(store);
       });

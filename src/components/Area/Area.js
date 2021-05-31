@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import TodosCard from '../TodosCard';
 
 function Area({area, dropdownIsRolled}) {
+  const { t } = useTranslation();
+
   return (
     dropdownIsRolled &&
       <View style={styles.container}>
-        {area && <TodosCard />}
+        {area ? <TodosCard /> : <Text style={styles.message}>{t('no areas')}</Text>}
       </View>
   );
 }
@@ -44,5 +47,17 @@ const styles = StyleSheet.create({
     left: '5%',
     display: 'flex',
     flexBasis: '80%'
+  },
+  message: {
+    display: 'flex',
+    justifyContent: 'center',
+    textAlign: 'center',
+    position: 'absolute',
+    bottom: 0,
+    top: 0,
+    color: 'rgba(254, 226, 226, 1)',
+    fontSize: 24,
+    fontWeight: '900',
+    width: '100%',
   }
 });

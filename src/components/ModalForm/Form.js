@@ -8,7 +8,7 @@ function Form({ areaId, createArea, createTodo, dropdownIsRolled, toggleFormIsSh
   const [title, setTitle] = useState('')
 
   const { placeholder, testId, onSubmit } =
-    dropdownIsRolled
+    areaId && dropdownIsRolled
       ? { placeholder: t('create todo placeholder'), testId: 'AddTodo', onSubmit: (data) => { createTodo({ title: data, areaId }); } }
       : { placeholder: t('create area placeholder'), testId: 'AddArea', onSubmit: (data) => { createArea({ title: data }) } }
 
@@ -36,7 +36,12 @@ function Form({ areaId, createArea, createTodo, dropdownIsRolled, toggleFormIsSh
 }
 
 Form.propTypes = {
-  areaId: PropTypes.string.isRequired,
+  areaId: PropTypes.oneOfType(
+    [
+      PropTypes.string,
+      PropTypes.bool
+    ],
+  ),
   createArea: PropTypes.func.isRequired,
   createTodo: PropTypes.func.isRequired,
   dropdownIsRolled: PropTypes.bool.isRequired,

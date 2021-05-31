@@ -8,12 +8,12 @@ import LanguagePanel from '../shared/LanguagePanel';
 import ModalForm from '../ModalForm';
 import PlusIcon from '../../assets/icons/PlusIcon';
 
-function PlannerMenu({ dropdownIsRolled, navigation, toggleFormIsShown }){
+function PlannerMenu({ areasPresent, dropdownIsRolled, navigation, toggleFormIsShown }){
   return (
     <>
       <View style={styles.controlPanel}>
         <ImageButtonLink callback={toggleFormIsShown}>
-          <PlusIcon stroke={dropdownIsRolled ? 'black' : '#D83E1D'}/>
+          <PlusIcon stroke={areasPresent && dropdownIsRolled ? 'black' : '#D83E1D'}/>
         </ImageButtonLink>
         {
           dropdownIsRolled &&
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
 });
 
 PlannerMenu.propTypes = {
+  areasPresent: PropTypes.bool.isRequired,
   dropdownIsRolled: PropTypes.bool.isRequired,
   navigation: PropTypes.object.isRequired,
   toggleFormIsShown: PropTypes.func.isRequired
