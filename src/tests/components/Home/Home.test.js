@@ -261,5 +261,16 @@ describe('Home', () => {
       expect(authenticationsSliceActions.resetError).toHaveBeenCalledTimes(1);
       expect(store.dispatch).toHaveBeenCalledTimes(2);
     });
+
+    it('dispatches resetError action on click on background', () => {
+      authenticationsSliceActions.resetError = jest.fn().mockImplementation();
+
+      const background = component.getByTestId('errorBackground');
+
+      fireEvent.press(background);
+
+      expect(authenticationsSliceActions.resetError).toHaveBeenCalledTimes(1);
+      expect(store.dispatch).toHaveBeenCalledTimes(2);
+    });
   });
 });

@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { castErrorMessage } from './functions';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 function Errors({ isError, error, callback }) {
   return (
     isError
       && (
-      <View style={styles.container}>
+      <TouchableOpacity style={styles.container} testID='errorBackground' onPress={callback}>
         <TouchableOpacity style={styles.button} onPress={callback} >
           <Text>{castErrorMessage(error)}</Text>
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
       )
   );
 }
