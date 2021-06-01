@@ -14,7 +14,7 @@ const forbiddenResponse = [403, { errors: { email: ['has already been taken'] } 
 const unauthorizedResponse = [401, { errors: ['Unauthorized'] }]
 
 const authorizedResponseWithCookie = async () => {
-  await AsyncStorage.setItem('Authorized?', true)
+  await AsyncStorage.setItem('Authorized?', 'true')
 
   return [200]
 }
@@ -37,7 +37,7 @@ const authenticationHandlers = function(mock) {
   });
   mock.onPost('/auth/demo').reply(async () => authorizedResponseWithCookie());
   mock.onDelete('/auth').reply(async function() {
-    await AsyncStorage.setItem('Authorized?', false)
+    await AsyncStorage.setItem('Authorized?', 'false')
 
     return [200]
   });

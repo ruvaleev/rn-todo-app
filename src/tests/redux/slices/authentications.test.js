@@ -75,13 +75,13 @@ describe('authenticationsReducer', () => {
       expect(store.getState().authenticationsReducer.isLoading).toEqual(false);
       expect(store.getState().authenticationsReducer.error).toEqual(null);
 
-      expect(await AsyncStorage.getItem('DemoMode?')).toEqual(true)
+      expect(await AsyncStorage.getItem('DemoMode?')).toEqual('true')
     });
   });
 
   describe('logOut', () => {
     it('set isAuthenticated flag to false, nullifies authToken and clears DemoMode? cookie', async () => {
-      await AsyncStorage.setItem('DemoMode?', true)
+      await AsyncStorage.setItem('DemoMode?', 'true')
       await store.dispatch(authenticationsSliceActions.logOut());
 
       expect(store.getState().authenticationsReducer.isAuthenticated).toEqual(false);
