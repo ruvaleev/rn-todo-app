@@ -25,7 +25,7 @@ i18n
   .init({
     fallbackLng: 'en',
     react: { 
-      useSuspense: false
+      useSuspense: process.env.NODE_ENV != 'test'
     },
     resources: localesFiles,
     debug: process.env.NODE_ENV == 'development',
