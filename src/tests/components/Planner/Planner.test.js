@@ -8,6 +8,7 @@ import Planner from '../../../components/Planner';
 import Store from '../../shared/Store';
 import * as areasSliceActions from '../../../redux/slices/areas';
 import * as authenticationsSliceActions from '../../../redux/slices/authentications';
+import AreasReducerGenerator from '../../shared/AreasReducerGenerator';
 import AuthenticationsReducerGenerator from '../../shared/AuthenticationsReducerGenerator';
 
 function renderWithStoreAndNavigator(store, navigation) {
@@ -131,6 +132,23 @@ describe('Planner', () => {
 
     it("doesn't fetch areas", () => {
       expect(areasSliceActions.fetchAreas).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('when component is loading', () => {
+    beforeEach(() => {
+      store = mockStore(Store({
+        areasReducer: AreasReducerGenerator({
+          isLoading: true
+        }),
+      }));
+
+      store.dispatch = jest.fn();
+      component = renderWithStoreAndNavigator(store, navigation);
+    });
+
+    it('renders loading icon', () => {
+      expect(component.getByTestId('LoadingIcon')).toBeTruthy();
     });
   });
 });

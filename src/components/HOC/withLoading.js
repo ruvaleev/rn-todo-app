@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LoadingIcon from '../../assets/icons/LoadingIcon';
 import { Animated, Easing, StyleSheet, View } from 'react-native';
 
-function LoadingScreen({ isLoading }) {
+function LoadingScreen() {
   useEffect(() => {
     startImageRotateFunction()
   }, [false]);
@@ -27,12 +27,9 @@ function LoadingScreen({ isLoading }) {
 
   return (
     <View testID='LoadingIcon' style={styles.loadingContainer}>
-      {
-        isLoading &&
-          <Animated.View style={{transform: [{rotate: rotateData}], width: 32, height: 32}}>
-            <LoadingIcon width={32} height={32}/>
-          </Animated.View>
-      }
+        <Animated.View style={{transform: [{rotate: rotateData}], width: 32, height: 32}}>
+          <LoadingIcon width={32} height={32}/>
+        </Animated.View>
     </View>
   );
 }
@@ -42,7 +39,7 @@ const withLoading = (EnhancedComponent) => {
   function renderWithLoading({ isLoading, ...props }) {
     return (
       <>
-        {isLoading && <LoadingScreen isLoading={isLoading} />}
+        {isLoading && <LoadingScreen /> }
         <View style={styles.container}>
           <EnhancedComponent {...props} />
         </View>
@@ -63,19 +60,18 @@ withLoading.propTypes = {
   Component: PropTypes.element,
 };
 
-LoadingScreen.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-};
-
-
 const styles = StyleSheet.create({
   container: {
     height: '100%'
   },
   loadingContainer: {
     position: 'absolute',
-    top: 20,
-    right: 20,
+    top: 0,
+    right: 0,
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
     zIndex: 1
-  }
+  },
 });

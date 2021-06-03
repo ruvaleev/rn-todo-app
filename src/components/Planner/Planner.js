@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import withLoading from '../HOC/withLoading';
 import AreasCard from '../AreasCard';
 import DemoModeMessage from '../shared/DemoModeMessage';
 import PlannerMenu from '../PlannerMenu';
@@ -28,7 +29,7 @@ function Planner({ fetchAreas, isAuthenticated, navigation, setError }) {
   );
 }
 
-export default Planner;
+export default withLoading(Planner);
 
 const styles = StyleSheet.create({
   container: {
