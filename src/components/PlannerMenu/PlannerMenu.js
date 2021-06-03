@@ -33,7 +33,7 @@ export default PlannerMenu;
 const styles = StyleSheet.create({
   controlPanel: {
     backgroundColor: '#fff',
-    paddingBottom: 16,
+    paddingBottom: 31,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
