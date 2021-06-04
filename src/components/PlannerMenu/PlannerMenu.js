@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
 import HomeLink from '../shared/HomeLink';
 import ImageButtonLink from '../shared/ImageButtonLink';
@@ -33,7 +33,7 @@ export default PlannerMenu;
 const styles = StyleSheet.create({
   controlPanel: {
     backgroundColor: '#fff',
-    paddingBottom: 31,
+    paddingBottom: Platform.OS === 'ios' ? 31 : 16,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',

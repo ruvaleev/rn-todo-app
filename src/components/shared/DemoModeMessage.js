@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text } from 'react-native';
+import { Platform, StyleSheet, Text } from 'react-native';
 
 function DemoModeMessage({ isDemo }) {
   const { t } = useTranslation();
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     position: 'absolute',
-    bottom: 15,
+    bottom: Platform.OS === 'ios' ? 15 : 0,
     color: 'rgba(254, 226, 226, 1)',
     fontWeight: '900',
     width: '100%',
