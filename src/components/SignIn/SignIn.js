@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import withLoading from '../HOC/withLoading';
@@ -16,13 +15,10 @@ function SignInForm({ onSubmit, navigation }) {
   );
 }
 
-function SignIn({ error, isAuthenticated, isError, navigation, resetError, setError, signIn }) {
-  const { t } = useTranslation();
-
+function SignIn({ error, isAuthenticated, isError, navigation, resetError, signIn }) {
   useEffect(() => {
     if (isAuthenticated) {
       navigation.navigate('Home');
-      setError(t('error:already signed in'));
     }
   }, [isAuthenticated]);
 
@@ -47,7 +43,6 @@ SignIn.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   navigation: PropTypes.object.isRequired,
   resetError: PropTypes.func.isRequired,
-  setError: PropTypes.func.isRequired,
   signIn: PropTypes.func.isRequired,
 };
 

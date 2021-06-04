@@ -18,7 +18,6 @@
         "response is undefined": "Server is unavailable now, try again later..."
       },
       "error": {
-        "already signed in": "You already signed in",
         "response is undefined": "Server is unavailable now, try again later...",
         "unauthenticated": "Вы не авторизованы"
       }

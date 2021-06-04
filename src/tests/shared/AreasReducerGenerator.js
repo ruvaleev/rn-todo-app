@@ -64,7 +64,8 @@ function getRandomInt(max) {
 
 function composeAreasForStore(areas) {
   const area = areas[getRandomInt(areas.length)];
-  area.choosen = true;
+  area && (area.choosen = true);
+
   return areas;
 }
 

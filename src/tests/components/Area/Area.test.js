@@ -5,7 +5,9 @@ import { render } from '@testing-library/react-native'
 
 import Area from '../../../components/Area';
 import Store from '../../shared/Store';
+import AreasReducerGenerator from '../../shared/AreasReducerGenerator';
 import MenusReducerGenerator from '../../shared/MenusReducerGenerator';
+import { useTranslation } from 'react-i18next';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({t: key => key})
@@ -48,4 +50,22 @@ describe('Area', () => {
       area.todos.forEach((todo) => expect(component.queryByText(todo.title)).toBeFalsy());
     });
   })
+
+
+  describe('when user has no areas and tasks yet', () => {
+    beforeEach(() => {
+      store = mockStore(Store({
+        areasReducer: AreasReducerGenerator({
+          areasCount: 0
+        })
+      }));
+      store.dispatch = jest.fn();
+      component = renderWithStore(store);
+    });
+
+    it("renders appropriate message", () => {
+      const { t } = useTranslation();
+      expect(component.queryByText(t('no areas'))).toBeTruthy();
+    });
+  });
 });

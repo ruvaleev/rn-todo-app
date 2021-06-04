@@ -18,7 +18,8 @@ export default HomeLink;
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginLeft: 8
   }
 });
 

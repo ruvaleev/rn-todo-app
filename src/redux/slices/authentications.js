@@ -60,7 +60,7 @@ export const logInDemo = createAsyncThunk(
   async () => {
     await axiosBackendInstance.post('/auth/demo')
       .then((res) => {
-        AsyncStorage.setItem('DemoMode?', true)
+        AsyncStorage.setItem('DemoMode?', 'true')
         res;
       })
       .catch((error) => Promise.reject(new Error(error.response.data.errors)));

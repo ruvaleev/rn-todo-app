@@ -84,7 +84,6 @@ describe('SignUp', () => {
 
   describe('when user is authenticated already', () => {
     beforeEach(() => {
-      errorMessage = i18n.t('error:already signed in');
       store = mockStore(Store({
         authenticationsReducer: AuthenticationsReducerGenerator({
           isAuthenticated: true
@@ -94,9 +93,8 @@ describe('SignUp', () => {
       authenticationsSliceActions.setError = jest.fn();
       component = renderWithStoreAndNavigator(store, navigation);
     });
-    it('redirects to Home page and sets proper error message', () => {
+    it('redirects to Home page', () => {
       expect(navigate).toHaveBeenCalledWith('Home');
-      expect(authenticationsSliceActions.setError).toHaveBeenCalledWith(errorMessage);
     });
   });
 });

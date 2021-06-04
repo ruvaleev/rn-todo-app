@@ -14,8 +14,6 @@ function ToggleLocaleButton() {
     <ButtonLink
       title={t('change language')}
       callback={() => {
-        // i18next.changeLanguage('ru');
-        // i18n.locale = 'ru';
         i18next.changeLanguage(locale);
         setLocale(chooseNewLocale());
       }}
