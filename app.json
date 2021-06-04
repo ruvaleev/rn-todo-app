@@ -7,6 +7,9 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "title": "Simple Planner",
+    "description": 
+      "Simple planner application.\nTo open it on your device, use 'Expo Go' application. You can find it by search or by links below:\nIn AppStore: https://apps.apple.com/am/app/expo-client/id982107779\nIn Google Play: https://play.google.com/store/apps/details?id=host.exp.exponent",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
